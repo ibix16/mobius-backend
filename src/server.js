@@ -12,3 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Server Initialization and api base path defined 
+
+// api endpoints are prefixed with /api/schedule

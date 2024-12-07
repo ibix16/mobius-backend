@@ -1,3 +1,4 @@
 node_modules/
 .env
 *.log
+certs/us-west-1-bundle.pem

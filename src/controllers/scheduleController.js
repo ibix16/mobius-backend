@@ -49,3 +49,17 @@ const deleteClass = async (req, res) => {
 };
 
 module.exports = { getClasses, createClass, updateClass, deleteClass };
+
+
+// Controller logic found above includes :
+  // getting all classes in db 
+  // creating new class 
+  // updating exisiting class
+  // deleting class 
+
+
+
+
+
+
+// This file contains the logic for handling requests to each route
