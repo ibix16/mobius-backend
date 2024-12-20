@@ -8,12 +8,15 @@ const router = express.Router();
 const classValidationRules = [
     body('title').notEmpty().withMessage('Title is required'),
     body('description').notEmpty().withMessage('Description is required'),
-    body('start_time').isISO8601().withMessage('Start time must be a valid ISO 8601 date'),
-    body('end_time').isISO8601().withMessage('End time must be a valid ISO 8601 date'),
+    body('schedule_day').isString().notEmpty().withMessage('Schedule day is required'),
+    body('start_time').isISO8601().withMessage('Start time must be a valid ISO 8601 datetime'),
+    body('end_time').isISO8601().withMessage('End time must be a valid ISO 8601 datetime'),
     body('classroom_id').isInt().withMessage('Classroom ID must be an integer'),
-    body('instructor_id').isInt().withMessage('Instructor ID must be an integer')
+    body('instructor_ids').isArray({ min: 1 }).withMessage('At least one instructor ID is required'),
+    body('instructor_ids.*').isInt().withMessage('Instructor IDs must be integers')
 ];
 
+// ID Validation Rule
 const idValidation = [
     param('id').isInt().withMessage('Class ID must be an integer')
 ];
@@ -25,5 +28,6 @@ router.put('/classes/:id', [...idValidation, ...classValidationRules], updateCla
 router.delete('/classes/:id', idValidation, deleteClass);
 
 module.exports = router;
+
 
 // This file maps api endpoints to their respective controller functions
