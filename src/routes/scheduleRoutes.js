@@ -1,6 +1,19 @@
 const express = require('express');
 const { body, param } = require('express-validator');
-const { getClasses, createClass, updateClass, deleteClass, addStudentToClass, getStudents, getStudentById, updateStudent, deleteStudent, editStudentEnrollment } 
+const { getClasses, 
+        createClass, 
+        updateClass, 
+        deleteClass, 
+        addStudentToClass, 
+        getStudents, 
+        getStudentById, 
+        updateStudent, 
+        deleteStudent, 
+        editStudentEnrollment, 
+        addAvailability, 
+        updateAvailability, 
+        deleteAvailability, 
+        getInstructorAvailabilities } 
         = require('../controllers/scheduleController');
 
 const router = express.Router();
@@ -23,16 +36,21 @@ const idValidation = [
 ];
 
 // Routes
+router.put('/classes/students', editStudentEnrollment);
+router.post('/classes/students', addStudentToClass);
 router.get('/classes', getClasses);
 router.post('/classes', classValidationRules, createClass);
-router.put('/classes/students', editStudentEnrollment);
+router.get('/students', getStudents);
+router.post("/instructors/availability", addAvailability);
+router.put("/instructors/availability", updateAvailability);
+router.delete("/instructors/availability", deleteAvailability);
 router.put('/classes/:id', [...idValidation, ...classValidationRules], updateClass);
 router.delete('/classes/:id', idValidation, deleteClass);
-router.post('/classes/students', addStudentToClass);
-router.get('/students', getStudents);
 router.get('/students/:id', getStudentById);
+router.get('/instructors/availability', getInstructorAvailabilities);
 router.put('/students/:id', updateStudent);
 router.delete('/students/:id', deleteStudent);
+
 
 
 
