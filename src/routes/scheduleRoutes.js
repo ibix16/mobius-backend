@@ -1,6 +1,7 @@
 const express = require('express');
 const { body, param } = require('express-validator');
-const { getClasses, createClass, updateClass, deleteClass } = require('../controllers/scheduleController');
+const { getClasses, createClass, updateClass, deleteClass, addStudentToClass, getStudents, getStudentById, updateStudent, deleteStudent, editStudentEnrollment } 
+        = require('../controllers/scheduleController');
 
 const router = express.Router();
 
@@ -24,8 +25,17 @@ const idValidation = [
 // Routes
 router.get('/classes', getClasses);
 router.post('/classes', classValidationRules, createClass);
+router.put('/classes/students', editStudentEnrollment);
 router.put('/classes/:id', [...idValidation, ...classValidationRules], updateClass);
 router.delete('/classes/:id', idValidation, deleteClass);
+router.post('/classes/students', addStudentToClass);
+router.get('/students', getStudents);
+router.get('/students/:id', getStudentById);
+router.put('/students/:id', updateStudent);
+router.delete('/students/:id', deleteStudent);
+
+
+
 
 module.exports = router;
 

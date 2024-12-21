@@ -43,7 +43,26 @@ const checkInstructorConflict = async (instructor_ids, start_time, end_time, sch
   return result.rowCount > 0;  // True if conflict exists
 };
 
+// Student Conflict Check
+const checkStudentConflict = async (student_id, start_time, end_time, schedule_day) => {
+    const query = `
+      SELECT DISTINCT c.id
+      FROM classes c
+      JOIN class_students cs ON c.id = cs.class_id
+      WHERE cs.student_id = $1
+        AND c.schedule_day = $2
+        AND (
+          (c.start_time, c.end_time) OVERLAPS ($3::timestamp, $4::timestamp)
+        )
+    `;
+    const values = [student_id, schedule_day, start_time, end_time];
+    
+    const result = await pool.query(query, values);
+    return result.rowCount > 0; // True if a conflict exists
+  };
+
 module.exports = {
   checkClassroomConflict,
-  checkInstructorConflict
+  checkInstructorConflict,
+  checkStudentConflict
 };
